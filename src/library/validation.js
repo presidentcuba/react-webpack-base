@@ -1,0 +1,592 @@
+export function ValidationField(typelist, fieldValue, fieldCaption, elementItem) {
+    // console.log("ValidationField", typelist, fieldValue, fieldCaption, elementItem)
+    let IsEr = 0;
+    let result;
+    if (typelist.includes("required") && IsEr == 0) {
+        // if ((fieldValue == undefined || fieldValue.length == 0) || (typelist.includes("number") && parseInt(fieldValue) == 0)) {
+        if (fieldValue == undefined || fieldValue.length == 0 || String(fieldValue).trim() == "") {
+            IsEr = 1;
+            //console.log("ValidationField", typelist, fieldValue, fieldCaption);
+
+            let messError = "";
+            if (elementItem.labelError != undefined && String(elementItem.labelError).trim() != "") {
+                if (elementItem.type == "select") {
+                    messError = elementItem.labelError;
+                } else {
+                    messError = "Vui lòng nhập " + elementItem.labelError;
+                }
+            } else {
+                if (elementItem.type == "select") {
+                    messError = "Vui lòng chọn " + fieldCaption;
+                } else {
+                    messError = "Vui lòng nhập " + fieldCaption;
+                }
+            }
+            // console.log("elementItem", elementItem, messError);
+            result = {
+                IsError: true,
+                fieldValue: fieldValue,
+                Message: messError, //fieldCaption.toLowerCase()
+            };
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("Comborequired") && IsEr == 0) {
+        //console.log("Comborequired")
+        if (fieldValue == undefined || parseInt(fieldValue) < 0 || String(fieldValue).trim() == "") {
+            IsEr = 1;
+            result = {
+                IsError: true,
+                fieldValue: fieldValue,
+                Message: "Vui lòng chọn " + fieldCaption.toLowerCase(),
+            };
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("number") && IsEr == 0) {
+        if (fieldValue) {
+            if (fieldValue.toString().length > 1) {
+                if (/^[0-9][0-9]*$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                } else {
+                    IsEr = 1;
+                    let messError = "Vui lòng nhập số";
+                    if (elementItem.labelError != undefined) {
+                        messError = elementItem.labelError;
+                    } else {
+                        if (elementItem.type == "select") {
+                            messError = "Vui lòng chọn " + fieldCaption;
+                        }
+                    }
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: messError,
+                    };
+                }
+            } else {
+                if (/^[0-9]*$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                } else {
+                    IsEr = 1;
+                    let messError = "";
+                    if (elementItem.labelError != undefined) {
+                        messError = elementItem.labelError;
+                    } else {
+                        messError = "Vui lòng nhập số ";
+                    }
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: messError,
+                    };
+                }
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("numberDecimal") && IsEr == 0) {
+        if (fieldValue) {
+            if (fieldValue.toString().length > 1) {
+                if (/^\d*\.?\d+$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                } else {
+                    IsEr = 1;
+                    let messError = "Vui lòng nhập số";
+                    if (elementItem.labelError != undefined) {
+                        messError = elementItem.labelError;
+                    } else {
+                        if (elementItem.type == "select") {
+                            messError = "Vui lòng chọn " + fieldCaption;
+                        }
+                    }
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: messError,
+                    };
+                }
+            } else {
+                if (/^\d*\.?\d+$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                } else {
+                    IsEr = 1;
+                    let messError = "";
+                    if (elementItem.labelError != undefined) {
+                        messError = elementItem.labelError;
+                    } else {
+                        messError = "Vui lòng nhập số ";
+                    }
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: messError,
+                    };
+                }
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("numbernew") && IsEr == 0) {
+        if (fieldValue) {
+            if (fieldValue.toString().length > 1) {
+                if (/^[0-9][0-9]*$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                }
+            } else {
+                if (/^[0-9]*$/.test(fieldValue)) {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                }
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    /*kiểm tra ký tự đặc biệt */
+    if (typelist.includes("special") && IsEr == 0) {
+        regEx = fieldValue.replace(/[`~!@#$%^&*_|+\-=?;:",.<>\{\}\[\]\\\/]/g, "");
+        result = {
+            IsError: true,
+            fieldValue: fieldValue,
+            Message: "Vui lòng nhập không nhập kí tự đặt biệt",
+        };
+    }
+
+    /*kiểm tra ký tự đặc biệt new*/
+    if (typelist.includes("specialNew") && IsEr == 0) {
+        const regEx = /^[a-zA-Z0-9]+$/;
+        let aa = regEx.test(fieldValue);
+        console.log("aa", aa);
+        if (aa) {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        } else {
+            IsEr = 1;
+            result = {
+                IsError: true,
+                fieldValue: fieldValue,
+                Message: "Vui lòng nhập không nhập kí tự đặt biệt",
+            };
+        }
+    }
+
+    /*Chỉ viết Hoa*/
+    if (typelist.includes("toUpperCase") && IsEr == 0) {
+        fieldValue = fieldValue.replace(/[`~!@#$%^&*_|+\-=?;:",.<>\{\}\[\]\\\/]/g, "");
+        fieldValue.toUpperCase();
+        result = {
+            IsError: false,
+            fieldValue: fieldValue,
+            Message: "",
+        };
+    }
+
+    /*Viết hoa kí tự đầu của string*/
+    if (typelist.includes("capitalize") && IsEr == 0) {
+        fieldValue.capitalize();
+        IsEr = 0;
+        result = {
+            IsError: false,
+            fieldValue: fieldValue,
+            Message: "",
+        };
+    }
+
+    if (typelist.includes("Email") && IsEr == 0) {
+        var regEx = new RegExp(
+            /^([a-zA-Z0-9_\-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+        );
+        if (fieldValue.length > 0) {
+            if (regEx.test(fieldValue.trim())) {
+                IsEr = 0;
+                result = {
+                    IsError: false,
+                    fieldValue: fieldValue,
+                    Message: "",
+                };
+            } else {
+                IsEr = 1;
+                result = {
+                    IsError: true,
+                    fieldValue: fieldValue,
+                    Message: "Vui lòng nhập email đúng định dạng như (@gmail.com ,@yahoo.com,@abc.vn...... ).",
+                };
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("phone") && IsEr == 0) {
+        const arrayPrefixMobileNumber = new Array(
+            "086",
+            "096",
+            "097",
+            "098",
+            "032",
+            "033",
+            "034",
+            "035",
+            "036",
+            "037",
+            "038",
+            "039",
+            "088",
+            "091",
+            "094",
+            "083",
+            "084",
+            "085",
+            "081",
+            "082",
+            "089",
+            "090",
+            "093",
+            "070",
+            "079",
+            "077",
+            "076",
+            "078",
+            "092",
+            "056",
+            "058",
+            "099",
+            "059",
+            "087",
+        );
+        const arrayPrefixNumber = new Array(
+            "0200",
+            "0201",
+            "0202",
+            "0203",
+            "0204",
+            "0205",
+            "0206",
+            "0207",
+            "0208",
+            "0209",
+            "0210",
+            "0211",
+            "0212",
+            "0213",
+            "0214",
+            "0215",
+            "0216",
+            "0217",
+            "0218",
+            "0219",
+            "0220",
+            "0221",
+            "0222",
+            "0223",
+            "0224",
+            "0225",
+            "0226",
+            "0227",
+            "0228",
+            "0229",
+            "0230",
+            "0231",
+            "0232",
+            "0233",
+            "0234",
+            "0235",
+            "0236",
+            "0237",
+            "0238",
+            "0239",
+            "0240",
+            "0241",
+            "0242",
+            "0243",
+            "0244",
+            "0245",
+            "0246",
+            "0247",
+            "0248",
+            "0249",
+            "0250",
+            "0251",
+            "0252",
+            "0253",
+            "0254",
+            "0255",
+            "0256",
+            "0257",
+            "0258",
+            "0259",
+            "0260",
+            "0261",
+            "0262",
+            "0263",
+            "0264",
+            "0265",
+            "0266",
+            "0267",
+            "0268",
+            "0269",
+            "0270",
+            "0271",
+            "0272",
+            "0273",
+            "0274",
+            "0275",
+            "0276",
+            "0277",
+            "0278",
+            "0279",
+            "0280",
+            "0281",
+            "0282",
+            "0283",
+            "0284",
+            "0285",
+            "0286",
+            "0287",
+            "0288",
+            "0289",
+            "0290",
+            "0291",
+            "0292",
+            "0293",
+            "0294",
+            "0295",
+            "0296",
+            "0297",
+            "0298",
+            "0299"
+        );
+        fieldValue = fieldValue.replace(/-/g, "");
+        const regEx = new RegExp(/^ *[0-9]+ *$/);
+        if (fieldValue.length > 0) {
+            if ((fieldValue.trim().length == 10 || fieldValue.trim().length == 11) && regEx.test(fieldValue.trim())) {
+                const strPrefixNumber = fieldValue.replace("-", "");
+                let flagPrefix = false;
+                let flagNumber = false;
+
+                for (var j = 0; j < arrayPrefixNumber.length; j++) {
+                    if (strPrefixNumber.startsWith(arrayPrefixNumber[j])) {
+                        flagPrefix = true;
+                    }
+                    if (strPrefixNumber.startsWith(arrayPrefixNumber[j]) && fieldValue.trim().length == 11) {
+                        flagNumber = true;
+                    }
+                }
+                for (var j = 0; j < arrayPrefixMobileNumber.length; j++) {
+                    if (strPrefixNumber.startsWith(arrayPrefixMobileNumber[j])) {
+                        flagPrefix = true;
+                    }
+                    if (
+                        (strPrefixNumber.startsWith(arrayPrefixMobileNumber[j]) &&
+                            fieldValue.trim().length == 10 &&
+                            arrayPrefixMobileNumber[j].length == 3) ||
+                        (strPrefixNumber.startsWith(arrayPrefixMobileNumber[j]) &&
+                            fieldValue.trim().length == 11 &&
+                            arrayPrefixMobileNumber[j].length == 4)
+                    ) {
+                        flagNumber = true;
+                    }
+                }
+
+                if (!flagPrefix) {
+                    IsEr = 1;
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: "Đầu số điện thoại không đúng.",
+                    };
+                } else if (!flagNumber) {
+                    IsEr = 1;
+                    result = {
+                        IsError: true,
+                        fieldValue: fieldValue,
+                        Message: "Đầu số điện thoại không đúng.",
+                    };
+                } else {
+                    IsEr = 0;
+                    result = {
+                        IsError: false,
+                        fieldValue: fieldValue,
+                        Message: "",
+                    };
+                }
+            } else {
+                IsEr = 1;
+                result = {
+                    IsError: true,
+                    fieldValue: fieldValue,
+                    Message: "Điện thoại không đúng định dạng (10 hoặc 11 số).",
+                };
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    if (typelist.includes("date") && IsEr == 0) {
+        if (fieldValue) {
+            var temp = fieldValue.trim().split("/");
+            var d = new Date(temp[1] + "/" + temp[0] + "/" + temp[2]);
+            let isValid = d && d.getMonth() + 1 == temp[1] && d.getDate() == Number(temp[0]) && d.getFullYear() == Number(temp[2]);
+
+            if (isValid) {
+                IsEr = 0;
+                result = {
+                    IsError: false,
+                    fieldValue: fieldValue,
+                    Message: "",
+                };
+            } else {
+                IsEr = 1;
+                result = {
+                    IsError: true,
+                    fieldValue: fieldValue,
+                    Message: "Vui lòng nhập ngày tháng đúng định dạng (ngày/tháng/năm).",
+                };
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    /*nhập số (int, float ......)*/
+    if (typelist.includes("digit") && IsEr == 0) {
+        if (fieldValue) {
+            if (isNaN(fieldValue)) {
+                IsEr = 1;
+                result = {
+                    IsError: true,
+                    fieldValue: fieldValue,
+                    Message: "Vui lòng chọn nhập số",
+                };
+            } else {
+                IsEr = 0;
+                result = {
+                    IsError: false,
+                    fieldValue: fieldValue,
+                    Message: "",
+                };
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    /*nhập mã khác 0*/
+    if (typelist.includes("check0") && IsEr == 0) {
+        if (fieldValue) {
+            if (fieldValue == 0) {
+                IsEr = 1;
+                result = {
+                    IsError: true,
+                    fieldValue: fieldValue,
+                    Message: "Vui lòng nhập số khác 0",
+                };
+            } else {
+                IsEr = 0;
+                result = {
+                    IsError: false,
+                    fieldValue: fieldValue,
+                    Message: "",
+                };
+            }
+        } else {
+            IsEr = 0;
+            result = {
+                IsError: false,
+                fieldValue: fieldValue,
+                Message: "",
+            };
+        }
+    }
+
+    return result;
+}
